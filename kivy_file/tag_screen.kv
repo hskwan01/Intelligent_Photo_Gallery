@@ -1,0 +1,227 @@
+# --- Tag Button ---
+<TagButton>:
+	orientation: 'horizontal'
+	size_hint: 1, None
+	height: 50
+	tag_b_name: tag_b_name
+	tag_b_count: tag_b_count
+	padding_x: 5
+
+
+	Label:
+		id: tag_b_name
+		font_size: 28
+		size_hint: None, 1
+		width: 520
+		shorten: True
+		text_size: (max(self.width - 20, 0), None)
+		v_align: 'middle'
+
+	Space:
+
+	Label:
+		id: tag_b_count
+		font_size: 28
+		size_hint: None, 1
+		width: 100
+
+# Modal view for chaning tag name
+<ModifyTagView>:
+	size_hint: None, None
+	width: 640
+	height: 440
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	input_text: input_text
+	warn_label: warn_label
+
+	BoxLayout:
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 400
+
+		Space:
+
+		Label:
+			font_size: 40
+			markup: True
+			text: '[b]Please enter a new name[/b]'
+
+
+		TextInput:
+			id: input_text
+			hint_text: ''
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			id: warn_label
+			font_size: 28
+			size_hint: 1, None
+			height: 50
+			markup: True
+			text: ' '
+		
+
+		BoxLayout: 
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Cancel  '
+				on_release: root.cancel_b()
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Confirm  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Space:
+
+
+
+# --- Tag Screen ---
+<TagScreen>:
+	tag_button_grid: tag_button_grid
+	search_content: tag_search_text
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Tags[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 15
+
+			TextInput:
+				id: tag_search_text
+				hint_text: 'enter tag name here...'
+				hint_text_color: 0.7, 0.7, 0.7, 1
+				size_hint: 1, None
+				height: 50
+				multiline: False
+				write_tab: False
+				on_text_validate: root.search_tags()
+
+			Button:
+				id: tag_search_button
+				text: '  Search  '
+				size_hint: None, None
+				width: 150
+				height: 50
+				on_release: root.search_tags()
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: tag_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 1
+				size_hint: 1, None
+				height: self.minimum_height
+
+# --- Tag View Screen (viewing details of a tag) ---
+<TagViewScreen>:
+	tag_name_info: tag_name_info
+	tag_result_label: tag_result_label
+	tag_modify_button: modify_button
+	tag_photo_grid: tag_photo_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Button:
+				font_size: 28
+				text: '  List of Tags  '
+				on_release: root.manager.current = 'tag_screen'
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+
+			Space:
+
+			Button:
+				id: modify_button
+				font_size: 28
+				text: '  Modify Tag Name  '
+				on_release: root.modify_name_b()
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+
+		Label:
+			id: tag_name_info
+			font_size: 40
+			text: "[b]View Tag (MISSING Tag NAME)[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 80
+
+			Label:
+				id: tag_result_label
+				font_size: 30
+				text: 'MISSING TAG RESULT'
+				markup: True
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 15
+
+			GridLayout:
+				id: tag_photo_grid
+				orientation: "vertical"
+				spacing: 10
+				cols: 5
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 200

@@ -1,0 +1,295 @@
+# --- View Screen information labels ---
+<InfoLabel@Label>:
+	font_size: 28
+	size_hint: None, None
+	size: self.texture_size
+	markup: True
+	size_hint: None, None
+	height: '360pt'
+	width: '500pt'
+
+# --- View Screen Function buttons ---
+<ViewScreenButton>:
+	font_size: 28
+	size_hint: None, None
+	width: 250
+	height: 55
+
+# --- View Screen Tag Button ---
+<ViewTagButton>:
+	font_size: 28
+	size_hint: 1, 1
+	shorten: True
+
+# --- View SCreen Person Button ---
+<ViewPersonButton>:
+	font_size: 28
+	size_hint: 1, 1
+	shorten: True
+
+# --- View modify tag button ---
+<ViewModifyTagButton>:
+	font_size: 28
+	size_hint: 1, None
+	height: 50
+	background_normal: ''
+	background_color: (0.5, 0.5, 0.5, 1)
+	shorten: True
+	text_size: (max(self.width - 10, 0), None)
+
+<ModifyPhotoView>:
+	size_hint: None, None
+	width: 640
+	height: 640
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	album_inp_field: album_inp_field
+	tag_inp_field: tag_inp_field
+	tag_grid: tag_grid
+	popup_msg_label: popup_msg_label
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 20
+		size_hint: None, None
+		width: 600
+		height: 600
+		spacing: 10
+
+		Label:
+			font_size: 32
+			text: "[b]Modify Photo Tag and Album[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		Label:
+			size_hint: 1, None
+			height: 20
+
+		Label:
+			font_size: 28
+			text: "[b]Album[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: album_inp_field
+			hint_text: 'enter an album name'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			font_size: 28
+			text: "[b]Tags[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			spacing: 5
+			height: 50
+
+			TextInput:
+				id: tag_inp_field
+				hint_text: 'enter a tag name'
+				size_hint: 1, None
+				height: 50
+				multiline: False
+				write_tab: False
+				# on_text_validate: root.add_tag()
+			
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				height: 50
+				text: '  Add  '
+				on_release: root.add_tag()
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: tag_grid
+				orientation: 'vertical'
+				size_hint: 1, None
+				height: self.minimum_height
+				cols: 1
+				spacing: 2
+
+		Label:
+			id: popup_msg_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 5
+
+			Space:
+
+			Button:
+				text: '  Cancel  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.close_view()
+
+			Button:
+				text: '  Modify  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.confirm_modify_b()
+
+			Space:
+
+# --- View Screen ---
+<ViewScreen>:
+	display_image: display_image
+	import_datetime_info: import_datetime_info
+	create_datetime_info: create_datetime_info
+	title_info: title_info
+	album_info: album_info
+	person_grid: person_grid
+	tag_grid: tag_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		Label:
+			id: title_info
+			font_size: 40
+			text: "[b]View Photo (MISSING TITLE)[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			size_hint: 1, 5
+			padding: '6pt'
+			canvas.before:
+		        Color:
+		            rgba: 0.7, 0.7, 0.7, 0.3
+		        Rectangle:
+		            pos: self.pos
+		            size: self.size
+
+			Image:
+				id: display_image
+				size_hint: 1, 1
+		
+		Label:
+			size_hint: 1, None
+			height: 5
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 300
+			spacing: 10
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+
+				GridLayout:
+					orientation: 'vertical'
+					size_hint: 1, None
+					height: self.minimum_height
+					cols: 2
+
+					InfoLabel:
+						text: '[b]Photo Date:[/b]'
+
+					InfoLabel:
+						id: create_datetime_info
+						text: 'create_date_info(MISSING DATE)'
+
+					InfoLabel:
+						text: '[b]Upload Date:[/b] '
+
+					InfoLabel:
+						id: import_datetime_info
+						text: 'import_date_info(MISSING DATE)'
+
+					InfoLabel:
+						text: '[b]Album:[/b] '
+
+					InfoLabel:
+						id: album_info
+						text: 'album_info(MISSING ALBUM)'
+
+				GridLayout:
+					orientation: 'vertical'
+					size_hint: 1, 1
+					width: self.minimum_width
+					spacing: 5
+					cols: 2
+
+					ViewScreenButton:
+						text: '  Delete photo  '
+						on_release: self.delete_photo_b()
+
+					ViewScreenButton:
+						text: ' Modify info '
+						on_release: self.modify_photo_b()
+
+
+			BoxLayout:
+				orientation: 'vertical'
+
+				InfoLabel:
+					text: '[b]Persons:[/b] '
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 15
+
+					GridLayout:
+						id: person_grid
+						orientation: "vertical"
+						spacing: 10
+						cols: 1
+						size_hint: 1, None
+						height: self.minimum_height
+						row_default_height: 50
+
+				InfoLabel:
+					text: '[b]Tags:[/b] '
+
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 15
+
+					GridLayout:
+						id: tag_grid
+						orientation: "vertical"
+						spacing: 10
+						cols: 3
+						size_hint: 1, None
+						height: self.minimum_height
+						row_default_height: 50
+
+		Label:
+			size_hint: 1, None
+			height: 100

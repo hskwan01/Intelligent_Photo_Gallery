@@ -1,0 +1,901 @@
+<CondLabel@Label>
+	font_size: 22
+	markup: True
+	size_hint: 1, None
+	height: self.texture_size[1]
+	shorten: True
+
+
+# --- Filter rules layout ---
+<FilterRuleLayout>
+	orientation: 'horizontal'
+	size_hint: 1, None
+	height: 200
+	spacing: 10
+	priority_label: priority_label
+	c_tag_list_label: c_tag_list_label
+	c_person_list_label: c_person_list_label
+	c_album_label: c_album_label
+	c_photo_date_label_af: c_photo_date_label_af
+	c_photo_date_label_bf: c_photo_date_label_bf
+	a_album_label: a_album_label
+	a_tag_label: a_tag_label
+
+	canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.4
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+		size_hint: None, 1
+		width: 20
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, 1
+		width: 100
+		spacing: 5
+
+		Space:
+
+		Button:
+			font_size: 26
+			size_hint: 1, None
+			height: 50
+			text: '  UP  '
+			on_release: root.swap_up_b()
+
+		Label:
+			id: priority_label
+			text: '???'
+			markup: True
+			font_size: 26
+			size_hint: 1, None
+			size: self.texture_size
+
+		Button
+			font_size: 26
+			size_hint: 1, None
+			height: 50
+			text: '  DOWN  '
+			on_release: root.swap_down_b()
+
+		Space:
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		spacing: 5
+
+		Space:
+
+		CondLabel:
+			id: c_tag_list_label
+			text: 'Tags: '
+
+		CondLabel:
+			id: c_person_list_label
+			text: 'Persons: '
+
+		CondLabel:
+			id: c_album_label
+			text: 'Album: '
+
+		CondLabel:
+			id: c_photo_date_label_af
+			text: 'after date: '
+		CondLabel:
+			id: c_photo_date_label_bf
+			text: 'before date: '
+
+		Space:
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		spacing: 5
+		
+		Space
+
+		CondLabel:
+			text: '[b]Filter Action[/b]'
+
+		CondLabel:
+			id: a_album_label
+			text: 'Album: '
+
+		CondLabel:
+			id: a_tag_label
+			text: 'Tag: '
+
+		Space:
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, 1
+		width: 100
+		spacing: 5
+
+		Space:
+
+		Button:
+			text: 'Modify'
+			size_hint: 1, None
+			height: 50
+			font_size: 26
+			on_release: root.modify_b()
+
+		Button:
+			text: 'Delete'
+			size_hint: 1, None
+			height: 50
+			font_size: 26
+			on_release: root.delete_b()
+
+		Button:
+			text: 'Apply'
+			size_hint: 1, None
+			height: 50
+			font_size: 26
+			on_release: root.apply_b()
+
+		Space:
+
+	Label:
+		size_hint: None, 1
+		width: 20
+
+
+# --- Popup Tag Button ---
+<PopupTagButton>:
+	font_size: 28
+	size_hint: 1, None
+	height: 50
+	background_normal: ''
+	background_color: (0.5, 0.5, 0.5, 1)
+	shorten: True
+	text_size: (max(self.width - 10, 0), None)
+
+# --- Popup Person Button ---
+<PopupPersonButton>:
+	font_size: 28
+	size_hint: 1, None
+	height: 50
+	background_normal: ''
+	background_color: (0.5, 0.5, 0.5, 1)
+	shorten: True
+	text_size: (max(self.width - 10, 0), None)
+
+# --- Filter POPUP Add filter rule (Set condition) ---
+<SetConditionView>:
+	id: set_condition_view
+	size_hint: None, None
+	width: 1000
+	height: 800
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	tag_cond_grid: tag_cond_grid
+	person_cond_grid: person_cond_grid
+	tag_inp_field: tag_inp_field
+	person_inp_field: person_inp_field
+	popup_msg_label: popup_msg_label
+	album_inp_field: album_inp_field
+	date_bf_inp_field: date_bf_inp_field
+	date_af_inp_field: date_af_inp_field
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 20
+		size_hint: None, None
+		width: 940
+		height: 740
+
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+
+			Space:
+
+			Label:
+				text: '[b]Import Filter Condition[/b]'
+				markup: True
+				font_size: 36
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, 1
+			spacing: 20
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+				spacing: 5
+
+				Label:
+					font_size: 28
+					text: "[b]Tags[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, None
+					spacing: 5
+					height: 50
+
+					TextInput:
+						id: tag_inp_field
+						hint_text: 'enter a tag name'
+						size_hint: 1, None
+						height: 50
+						multiline: False
+						write_tab: False
+						# on_text_validate: root.add_tag()
+					
+					Button:
+						font_size: 28
+						size_hint: None, 1
+						size: self.texture_size
+						height: 50
+						text: '  Add  '
+						on_release: root.add_tag()
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 10
+
+					GridLayout:
+						id: tag_cond_grid
+						orientation: 'vertical'
+						size_hint: 1, None
+						height: self.minimum_height
+						cols: 1
+						spacing: 2
+
+				Label:
+					font_size: 28
+					text: "[b]Persons[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, None
+					spacing: 5
+					height: 50
+
+					TextInput:
+						id: person_inp_field
+						hint_text: 'enter a person name'
+						size_hint: 1, None
+						height: 50
+						multiline: False
+						write_tab: False
+						on_text_validate: root.add_person()
+					
+					Button:
+						font_size: 28
+						size_hint: None, 1
+						size: self.texture_size
+						height: 50
+						text: '  Add  '
+						on_release: root.add_person()
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 10
+
+					GridLayout:
+						id: person_cond_grid
+						orientation: 'vertical'
+						size_hint: 1, None
+						height: self.minimum_height
+						cols: 1
+						spacing: 2
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+				spaceing: 10
+
+				Label:
+					font_size: 28
+					text: "[b]Album[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: album_inp_field
+					hint_text: 'enter an album name'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Label:
+					size_hint: 1, None
+					height: 60
+
+				Label:
+					font_size: 28
+					text: "[b]Taken After[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: date_af_inp_field
+					hint_text: 'format: yyyy-mm-dd HH:MM:SS'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Label:
+					size_hint: 1, None
+					height: 60
+
+				Label:
+					font_size: 28
+					text: "[b]Taken Before[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: date_bf_inp_field
+					hint_text: 'format: yyyy-mm-dd HH:MM:SS'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Space:
+
+
+		Label:
+			id: popup_msg_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 5
+
+			Space:
+
+			Button:
+				text: '  Cancel  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.close_view()
+
+			Button:
+				text: '  Next  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.next_b()
+
+			Space:
+
+
+
+
+# --- Filter POPUP Add filter rule (Set action) ---
+<SetActionView>:
+	id: set_condition_view
+	size_hint: None, None
+	width: 800
+	height: 600
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	album_inp_field: album_inp_field
+	tag_inp_field: tag_inp_field
+	popup_msg_label: popup_msg_label
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 20
+		size_hint: None, None
+		width: 760
+		height: 560
+
+		Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+
+			Space:
+
+			Label:
+				text: '[b]Import Filter Action[/b]'
+				markup: True
+				font_size: 36
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		Label:
+			font_size: 28
+			text: "[b]Add Tag[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: tag_inp_field
+			hint_text: 'leave blank for no action'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+
+		Label:
+			font_size: 28
+			text: "[b]Set Album[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: album_inp_field
+			hint_text: 'leave blank for no action'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			id: popup_msg_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 5
+
+			Space:
+
+			Button:
+				text: '  Cancel  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.close_view()
+
+			Button:
+				text: '  Create  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.create_b()
+
+			Space:
+
+		Space:
+
+
+# --- Filter POPUP Modify filter rule (Modify condition) ---
+<ModifyConditionView>:
+	size_hint: None, None
+	width: 1240
+	height: 1080
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	tag_cond_grid: tag_cond_grid
+	person_cond_grid: person_cond_grid
+	tag_inp_field: tag_inp_field
+	person_inp_field: person_inp_field
+	popup_msg_label: popup_msg_label
+	album_inp_field: album_inp_field
+	date_bf_inp_field: date_bf_inp_field
+	date_af_inp_field: date_af_inp_field
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 20
+		size_hint: None, None
+		width: 1160
+		height: 1000
+
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+
+			Space:
+
+			Label:
+				text: '[b]Modify Filter Condition[/b]'
+				markup: True
+				font_size: 36
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, 1
+			spacing: 20
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+				spacing: 5
+
+				Label:
+					font_size: 28
+					text: "[b]Tags[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, None
+					spacing: 5
+					height: 50
+
+					TextInput:
+						id: tag_inp_field
+						hint_text: 'enter a tag name'
+						size_hint: 1, None
+						height: 50
+						multiline: False
+						write_tab: False
+						# on_text_validate: root.add_tag()
+					
+					Button:
+						font_size: 28
+						size_hint: None, 1
+						size: self.texture_size
+						height: 50
+						text: '  Add  '
+						on_release: root.add_tag()
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 10
+
+					GridLayout:
+						id: tag_cond_grid
+						orientation: 'vertical'
+						size_hint: 1, None
+						height: self.minimum_height
+						cols: 1
+						spacing: 2
+
+				Label:
+					font_size: 28
+					text: "[b]Persons[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, None
+					spacing: 5
+					height: 50
+
+					TextInput:
+						id: person_inp_field
+						hint_text: 'enter a person name'
+						size_hint: 1, None
+						height: 50
+						multiline: False
+						write_tab: False
+						on_text_validate: root.add_person()
+					
+					Button:
+						font_size: 28
+						size_hint: None, 1
+						size: self.texture_size
+						height: 50
+						text: '  Add  '
+						on_release: root.add_person()
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 10
+
+					GridLayout:
+						id: person_cond_grid
+						orientation: 'vertical'
+						size_hint: 1, None
+						height: self.minimum_height
+						cols: 1
+						spacing: 2
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+
+				Label:
+					font_size: 28
+					text: "[b]Album[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: album_inp_field
+					hint_text: 'enter an album name'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Label:
+					size_hint: 1, None
+					height: 60
+
+				Label:
+					font_size: 28
+					text: "[b]Taken After[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: date_af_inp_field
+					hint_text: 'format: yyyy-mm-dd HH:MM:SS'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Label:
+					size_hint: 1, None
+					height: 60
+
+				Label:
+					font_size: 28
+					text: "[b]Taken Before[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: date_bf_inp_field
+					hint_text: 'format: yyyy-mm-dd HH:MM:SS'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Space:
+
+		Label:
+			id: popup_msg_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 5
+
+			Space:
+
+			Button:
+				text: '  Cancel  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.close_view()
+
+			Button:
+				text: '  Next  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.next_b()
+
+			Space:
+
+
+
+
+# --- Filter POPUP Modify filter rule (Modify action) ---
+<ModifyActionView>:
+	size_hint: None, None
+	width: 800
+	height: 600
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	album_inp_field: album_inp_field
+	tag_inp_field: tag_inp_field
+	popup_msg_label: popup_msg_label
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 20
+		size_hint: None, None
+		width: 760
+		height: 560
+
+		Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+
+			Space:
+
+			Label:
+				text: '[b]Modify Filter Action[/b]'
+				markup: True
+				font_size: 36
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		Label:
+			font_size: 28
+			text: "[b]Add Tag[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: tag_inp_field
+			hint_text: 'leave blank for no action'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+
+		Label:
+			font_size: 28
+			text: "[b]Set Album[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: album_inp_field
+			hint_text: 'leave blank for no action'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			id: popup_msg_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 5
+
+			Space:
+
+			Button:
+				text: '  Cancel  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.close_view()
+
+			Button:
+				text: '  Modify  '
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.modify_b()
+
+			Space:
+
+		Space:
+
+
+
+# --- Filter Screen ---
+<FilterScreen>
+	filter_rule_grid: filter_rule_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Button:
+				font_size: 28
+				text: '  Apply Filters to All Photos   '
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+
+			Space:
+
+			Button:
+				font_size: 28
+				text: '  Add New Filter  '
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+				on_release: root.add_new_filter_b()
+
+		Label:
+			font_size: 40
+			text: "[b]Import Filters[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+
+		Label:
+			font_size: 28
+			text: "Use import filters to organize newly imported photos."
+			size_hint: None, None
+			size: self.texture_size
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: filter_rule_grid
+				orientation: 'vertical'
+				size_hint: 1, None
+				height: self.minimum_height
+				cols: 1
+				spacing: 2
+		Label:
+			size_hint: 1, None
+			height: 100

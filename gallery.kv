@@ -1,0 +1,183 @@
+#! include home.kv
+#! include import.kv
+#! include search.kv
+#! include view.kv
+#! include tag_screen.kv
+#! include album_screen.kv
+#! include person_screen.kv
+#! include management.kv
+#! include filter_screen.kv
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+
+# Common components defined here
+
+# --- Empty space for positioning ---
+<Space@Label>:
+
+
+# Components specific to this file start here
+# --- Logo to Home ---
+<HomeLabel>
+	font_size: 48
+	markup: True
+	text: '[b]Intelligent Photo Gallery[/b]'
+	size_hint: None, 1
+	width: 600
+	halign: 'left'
+
+# --- Main buttons on the left Side ---
+<MenuButton>:
+    background_color: (1, 1, 1, 1)
+	font_size: 26
+	size_hint: 1, None
+	height: 80
+
+# --- Screen Manager for handling the screens ---
+<ScreenManager>
+	transition: NoTransition()
+	import_screen: import_screen
+	search_screen: search_screen
+	view_screen: view_screen
+
+	HomeScreen:
+		name: 'home_screen'
+
+	ImportScreen:
+		id: import_screen
+		name: 'import_screen'
+
+	SearchScreen:
+		id: search_screen
+		name: 'search_screen'
+
+	ViewScreen:
+		id: view_screen
+		name: 'view_screen'
+
+	TagViewScreen:
+		id: tag_view_screen
+		name: 'tag_view_screen'
+
+	TagScreen:
+		id: tag_screen
+		name: 'tag_screen'
+
+	AlbumViewScreen:
+		id: album_view_screen
+		name: 'album_view_screen'
+
+	AlbumScreen:
+		id: album_screen
+		name: 'album_screen'
+
+	PersonScreen:
+		id: person_screen
+		name: 'person_screen'
+
+	UnidentifiedFacesScreen:
+		id: unidentified_faces_screen
+		name: 'unidentified_faces_screen'
+
+	PersonViewScreen:
+		id: person_view_screen
+		name: 'person_view_screen'
+
+	ManagementScreen:
+		id: management_screen
+		name: 'management_screen'
+
+	FilterScreen:
+		id: filter_screen
+		name: 'filter_screen'
+
+	Screen:
+		name: 'constuct_screen'
+
+		Label:
+			markup: True
+			text: '[b]Under Constuction, please wait for implementation...[/b]'
+
+		Space:
+
+# --- Gallery Layout, layout for the application ---
+<GalleryLayout>:
+	orientation: 'vertical'
+	canvas.before:
+        Color:
+            rgba: 0.422, 0.648, 0.8, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    content_screen: content_screen
+
+    BoxLayout:
+    	size_hint: 1, None
+    	height: 100
+    	canvas.before:
+	        Color:
+	            rgba: 0, 0, 0, 0.4
+	        Rectangle:
+	            pos: self.pos
+	            size: self.size
+
+		HomeLabel:
+
+		Space:
+
+
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint: 1, 1
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: None, 1
+			bar_width: 10
+			
+			width: 350
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: None, None
+				width: 350
+				spacing: 5
+				height: self.minimum_height
+
+				Label:
+					size_hint: 1, None
+					height: 5
+
+				MenuButton:
+					text: 'Import'
+					on_release: content_screen.current = "import_screen"
+
+				MenuButton:
+					text: 'Search'
+					on_release: content_screen.current = "search_screen"
+
+				MenuButton:
+					text: 'Tags'
+					on_release: content_screen.current = "tag_screen"
+
+				MenuButton:
+					text: 'Albums'
+					on_release: content_screen.current = "album_screen"
+
+				MenuButton:
+					text: 'Peoples'
+					on_release: content_screen.current = "person_screen"
+
+				MenuButton:
+					text: 'Management'
+					on_release: content_screen.current = 'management_screen'
+
+				MenuButton:
+					text: 'Import Filters'
+					on_release: content_screen.current = "filter_screen"
+
+				Space:
+		
+
+		ScreenManager:
+			id: content_screen

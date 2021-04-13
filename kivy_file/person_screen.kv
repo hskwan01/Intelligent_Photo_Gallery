@@ -1,0 +1,696 @@
+# --- Modal View for enering person name of unidentified faces ---
+<FaceInputView>:
+	id: face_input_view
+	size_hint: None, None
+	width: 840
+	height: 640
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	face_image: face_image
+	input_text: input_text
+	submit_button: submit_button
+	find_similar_button: find_similar_button
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 800
+		height: 600
+
+		Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 100
+			spacing: 10
+
+			Space:
+
+			Image:
+				id: face_image
+				size_hint: None, None
+				width: 100
+				height: 100
+
+			Space:
+
+		Label:
+			font_size: 32
+			text: 'Who is this?'
+			size_hint: None, None
+			size: self.texture_size
+
+		TextInput:
+			id: input_text
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			size_hint: 1, None
+			height: 20
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 10
+
+			Space:
+
+			Button:
+				id: submit_button
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Save  '
+				on_release: root.submit_b()
+
+			Button:
+				id: find_similar_button
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Save and find similar  '
+				on_release: root.find_similar_b()
+
+			Button:
+				id: delete_face_button
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Delete face  '
+				on_release: root.delete_b()
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Cancel  '
+				on_release: root.close_view()
+
+			Space:
+
+		Space:
+
+
+
+# --- Similar Faces View for finding similar faces ---
+<SimilarFacesView>
+	id: similar_faces_view
+	size_hint: None, None
+	width: 1240
+	height: 1040
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	person_name_label: person_name_label
+	face_image: face_image
+	faces_button_grid: faces_button_grid
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 1200
+		height: 1000
+
+		Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 100
+			spacing: 10
+
+			Image:
+				id: face_image
+				size_hint: None, None
+				width: 100
+				height: 100
+
+			Label:
+				id: person_name_label
+				font_size: 32
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+			
+
+		Label:
+			font_size: 24
+			size_hint: 1, None
+			text: 'Please confirm the faces below belongs to the same person, click to remove unrelated persons'
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: faces_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 8
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 80
+
+		Label:
+			size_hint: 1, None
+			height: 20
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 10
+
+			Space:
+
+			Button:
+				id: confirm_button
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Confirm  '
+				on_release: root.confirm_b()
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Cancel  '
+				on_release: root.close_view()
+
+			Space:
+
+		Space:
+
+
+# --- Modal view for choosing opotions for a face ---
+<FaceOptionView>
+	id: face_option_view
+	size_hint: None, None
+	width: 640
+	height: 640
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	face_image: face_image
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 600
+
+		Space: 
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 100
+			spacing: 10
+
+			Space:
+
+			Image:
+				id: face_image
+				size_hint: None, None
+				width: 100
+				height: 100
+
+			Space:
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 100
+			spacing: 10
+
+			Space:
+
+
+			GridLayout:
+				orientation: 'vertical'
+				size_hint: 1, None
+				height: self.minimum_height
+				cols: 2
+				spacing: 5
+				row_default_height: 60
+
+				Button:
+					font_size: 28
+					size_hint: None, 1
+					width: 200
+					height: 50
+					text: '  Delete face  '
+					on_release: root.delete_face_b()
+
+				Button:
+					font_size: 28
+					size_hint: None, 1
+					width: 200
+					height: 50
+					text: '  View Similar  '
+					on_release: root.view_similar_b()
+
+				Button:
+					font_size: 28
+					size_hint: None, 1
+					width: 200
+					height: 50
+					text: '  Change Person  '
+					on_release: root.change_person_b()
+
+				Button:
+					font_size: 28
+					size_hint: None, 1
+					height: 50
+					width: 200
+					text: '  View Photo  '
+					on_release: root.view_photo_b()
+
+			Space:
+
+
+		Label:
+			size_hint: None, None
+			height: 20
+		
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 100
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size: 28
+				size_hint: None, None
+				text: '  Cancel  '
+				height: 50
+				width: 200
+				on_release: root.close_view()
+
+			Space:
+
+		Space:
+
+
+# --- Modal View for Delete person confirmation ---
+<DeletePersonView>:
+	size_hint: None, None
+	width: 1000
+	height: 400
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	popup_title: popup_message_title
+	popup_message: popup_message_content
+	confirm_button: popup_confirmation_button
+
+	BoxLayout:
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 360
+
+		Space:
+
+		Label:
+			id: popup_message_title
+			font_size: 40
+			markup: True
+			text: '[b]Delete Person[/b]'
+
+		Label:
+			id: popup_message_content
+			font_size: 28
+			text: 'Are you sure to set all faces related to this person to unidentified faces?' 
+
+		BoxLayout: 
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Cancel  '
+				on_release: root.cancel_b()
+
+			Button:
+				id: popup_confirmation_button
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Confirm  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Space:
+
+
+# --- Similar Grid Image (Clickable) ---
+<SimilarGridImage>
+	size_hint: 1, 1
+
+
+# --- Person Screen Function Buttons ---
+<PersonScreenButton>:
+	font_size: 28
+	size_hint: None, 1
+	size: self.texture_size
+
+
+# --- Person Button ---
+<PersonButton>:
+	orientation: 'horizontal'
+	size_hint: 1, None
+	height: 50
+	person_b_name: person_b_name
+	person_b_count: person_b_count
+	padding_x: 20
+
+	Label:
+		id: person_b_name
+		font_size: 28
+		size_hint: None, 1
+		width: 520
+		shorten: True
+		text_size: (max(self.width - 20, 0), None)
+		v_align: 'middle'
+
+	Space:
+
+	Label:
+		id: person_b_count
+		font_size: 28
+		size_hint: None, 1
+		width: 100
+
+
+# --- Person Screen ---
+<PersonScreen>:
+	person_button_grid: person_button_grid
+	search_content: person_search_text
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Persons[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 15
+
+			TextInput:
+				id: person_search_text
+				hint_text: 'enter person name here...'
+				hint_text_color: 0.7, 0.7, 0.7, 1
+				size_hint: 1, None
+				height: 50
+				multiline: False
+				write_tab: False
+				on_text_validate: root.search_persons()
+
+			Button:
+				text: '  Search  '
+				size_hint: None, None
+				width: 150
+				height: 50
+				on_release: root.search_persons()
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 15
+
+			#PersonScreenButton:
+			#	text: '  New Faces  '
+			#	on_release: self.new_person_b()
+
+			PersonScreenButton:
+				text: '  Unlabeled Faces  '
+				on_release: self.unidentified_person_b()
+
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: person_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 1
+				size_hint: 1, None
+				height: self.minimum_height
+
+		Label:
+			size_hint: 1, None
+			height: 100
+
+# --- Face Grid Image (Clickable) ---
+<FaceGridImage>
+	size_hint: 1, 1
+
+
+# --- Face Grid Image 2 (Clickable) (Person view screen) ---
+<FaceGridImage2>
+	size_hint: 1, 1
+
+
+# --- Unidentified Faces Screen ---
+<UnidentifiedFacesScreen>:
+	faces_button_grid: faces_button_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Unidentifeid Faces[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		Label:
+			font_size: 24
+			text: 'Click on any of the below faces and select an appropriate person for the face'
+			size_hint: None, None
+			size: self.texture_size
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: faces_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 10
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 100
+
+		Label:
+			size_hint: 1, None
+			height: 100
+
+# --- Person View Screen (for viewing all faces related to the person) ---
+<PersonViewScreen>:
+	person_name_label: person_name_label
+	photo_count_label: photo_count_label
+	faces_button_grid: faces_button_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 20
+		spacing: 10
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+
+			Label:
+				id: person_name_label
+				font_size: 40
+				markup: True
+				size_hint: None, None
+				size: self.texture_size
+
+			Space:
+
+			Button:
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 50
+				text: '  Change Person Name  '
+				on_release: root.modify_name_b()
+
+			Button:
+				font_size: 28
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 50
+				text: '  Delete Person  '
+				on_release: root.delete_person_b()
+
+		Label:
+			id: photo_count_label
+			font_size: 24
+			size_hint: None, None
+			size: self.texture_size
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: faces_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 10
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 100
+
+		Label:
+			size_hint: 1, None
+			height: 100
+
+<ModifyPersonView>:
+	size_hint: None, None
+	width: 640
+	height: 440
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	input_text: input_text
+
+	BoxLayout:
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 400
+
+		Space:
+
+		Label:
+			font_size: 40
+			markup: True
+			text: '[b]Please enter a new name[/b]'
+
+
+		TextInput:
+			id: input_text
+			hint_text: ''
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+		
+
+		BoxLayout: 
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Cancel  '
+				on_release: root.cancel_b()
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Confirm  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Space:
+
+<ChangePersonView>:
+	id: face_input_view
+	size_hint: None, None
+	width: 640
+	height: 640
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	person_button_grid: person_button_grid
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 560
+		height: 600
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: person_button_grid
+				orientation: 'vertical'
+				size_hint: 1, None
+				height: self.minimum_height
+				cols: 1
+				spacing: 2
+
+		Button:
+			font_size: 28
+			size_hint: None, None
+			height: 50
+			width: 300
+			text: 'Change to unidentified'
+			on_release: root.remove_person_b()
+
+			
+		Space:
+
+<PersonChangeButton>:
+	font_size: 28
+	size_hint: 1, None
+	height: 50
+	markup: True
+
+

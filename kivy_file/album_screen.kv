@@ -1,0 +1,377 @@
+<CreateAlbumView>:
+	size_hint: None, None
+	width: 640
+	height: 640
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	new_album_name: new_album_name
+	new_album_description: new_album_description
+	popup_title: popup_title
+	popup_submit_button: submit_button
+	warn_label: warn_label
+
+	BoxLayout:
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 600
+
+		Space:
+
+		Label:
+			id: popup_title
+			font_size: 40
+			markup: True
+			text: '[b]Create New Album[/b]'
+
+		Label:
+			font_size: 28
+			markup: True
+			text: '[b]Album Name: [/b]'
+		
+		TextInput:
+			id: new_album_name
+			hint_text: 'album name'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			font_size: 28
+			markup: True
+			text: '[b]Description: [/b]'
+
+		TextInput:
+			id: new_album_description
+			hint_text: 'album description'
+			size_hint: 1, None
+			height: 150
+			multiline: True
+			write_tab: False
+
+		Label:
+			id: warn_label
+			font_size: 28
+			size_hint: 1, None
+			height: 50
+			markup: True
+			text: ' '
+
+		BoxLayout: 
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Cancel  '
+				on_release: root.cancel_b()
+
+			Button:
+				id: submit_button
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Create  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Space:
+
+# --- Modify Album View ---
+<ModifyAlbumView>:
+	size_hint: None, None
+	width: 640
+	height: 640
+	background:  'atlas://data/images/defaulttheme/button_pressed'
+	new_album_name: new_album_name
+	new_album_description: new_album_description
+	popup_title: popup_title
+	popup_submit_button: submit_button
+	warn_label: warn_label
+
+	BoxLayout:
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 600
+
+		Space:
+
+		Label:
+			id: popup_title
+			font_size: 40
+			markup: True
+			text: '[b]Modify Album Info[/b]'
+
+		Label:
+			font_size: 28
+			markup: True
+			text: '[b]Album Name: [/b]'
+		
+		TextInput:
+			id: new_album_name
+			hint_text: 'album name'
+			size_hint: 1, None
+			height: 50
+			multiline: False
+			write_tab: False
+
+		Label:
+			font_size: 28
+			markup: True
+			text: '[b]Description: [/b]'
+
+		TextInput:
+			id: new_album_description
+			hint_text: 'album description'
+			size_hint: 1, None
+			height: 150
+			multiline: True
+			write_tab: False
+
+		Label:
+			id: warn_label
+			font_size: 28
+			size_hint: 1, None
+			height: 50
+			markup: True
+			text: ' '
+
+		BoxLayout: 
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Cancel  '
+				on_release: root.cancel_b()
+
+			Button:
+				id: submit_button
+				font_size:28
+				size_hint: None, None
+				width: 200
+				height: 60
+				text: '  Modify  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Space:
+
+# --- Album Screen function buttons ---
+<AlbumScreenButton>:
+	font_size: 28
+	size_hint: None, 1
+	size: self.texture_size
+	height: 50
+
+# --- Album Buttons ---
+<AlbumButton>:
+	orientation: 'vertical'
+	size_hint: 1, None
+	album_b_name: album_b_name
+	album_b_count: album_b_count
+	album_b_description: album_b_description
+	padding_x: 5
+	height: 150
+
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint: 1, None
+		height: 50
+
+		Label:
+			id: album_b_name
+			font_size: 28
+			size_hint: None, 1
+			width: 520
+			shorten: True
+			text_size: (max(self.width - 20, 0), None)
+			v_align: 'middle'
+
+		Space:
+
+		Label:
+			id: album_b_count
+			font_size: 28
+			size_hint: None, 1
+			width: 100
+
+	Label:
+		id: album_b_description
+		font_size: 28
+		size_hint: 1, None
+		height: 100
+		shorten: True
+		text_size: (max(self.width - 20, 0), None)
+		v_align: 'top'
+
+
+# --- Album Screen ---
+<AlbumScreen>:
+	album_button_grid: album_button_grid
+	search_content: album_search_text
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Albums[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 15
+
+			TextInput:
+				id: album_search_text
+				hint_text: 'enter album name here...'
+				hint_text_color: 0.7, 0.7, 0.7, 1
+				size_hint: 1, None
+				height: 50
+				multiline: False
+				write_tab: False
+				on_text_validate: root.search_album()
+
+			AlbumScreenButton:
+				id: album_search_button
+				text: '  Search  '
+				on_release: self.search_album_b()
+
+			AlbumScreenButton:
+				id: create_album_button
+				text: '  Create New Album  '
+				on_release: self.create_album_b()
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 10
+
+			GridLayout:
+				id: album_button_grid
+				orientation: "vertical"
+				spacing: 2
+				cols: 1
+				size_hint: 1, None
+				height: self.minimum_height
+
+
+# --- Album View Screen (viewing details of an album) ---
+<AlbumViewScreen>:
+	album_name_info: album_name_info
+	album_description_label: album_description_label
+	album_result_label: album_result_label
+	album_modify_button: modify_button
+	album_photo_grid: album_photo_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: self.minimum_height
+			spacing: 10
+
+			Button:
+				font_size: 28
+				text: '  List of Albums  '
+				on_release: root.manager.current = 'album_screen'
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+
+			Space:
+
+			Button:
+				id: modify_button
+				font_size: 28
+				text: '  Modify Album  '
+				on_release: root.modify_album_b()
+				size_hint: None, None
+				width: self.texture_size[0]
+				height: 60
+
+		Label:
+			id: album_name_info
+			font_size: 40
+			text: "[b]View Album (MISSING ALBUM NAME)[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		Label:
+			id: album_description_label
+			font_size: 28
+			text: '[b]Description: [/b] MISSING DESCRIPTION'
+			markup: True
+			size_hint: 1, None
+			height: 120
+			text_size: self.size
+			valign: 'middle'
+			halign: 'left'
+			canvas.before:
+		        Color:
+		            rgba: 0.7, 0.7, 0.7, 0.3
+		        Rectangle:
+		            pos: self.pos
+		            size: self.size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 80
+
+			Label:
+				id: album_result_label
+				font_size: 30
+				text: 'MISSING ALBUM RESULT'
+				markup: True
+				size_hint: None, 1
+				size: self.texture_size
+
+			Space:
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 15
+
+			GridLayout:
+				id: album_photo_grid
+				orientation: "vertical"
+				spacing: 10
+				cols: 5
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 200

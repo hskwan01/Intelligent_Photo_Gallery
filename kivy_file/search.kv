@@ -1,0 +1,121 @@
+<DisplayOptionButton>
+	size_hint: None, None
+	width: 120
+	height: 40
+	font_size: 24
+
+<SearchGridImage>
+	size_hint: 1, 1
+
+<SearchScreen>:
+	search_content: search_text
+	search_result_label: search_result_label
+	search_result_grid: search_result_grid
+	load_more_button: load_more_button
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Search Photos[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 15
+
+
+			TextInput:
+				id: search_text
+				hint_text: 'enter keywords here...'
+				hint_text_color: 0.7, 0.7, 0.7, 1
+				size_hint: 1, None
+				height: 50
+				multiline: False
+				write_tab: False
+				on_text_validate: root.search_bar_search()
+
+			Button:
+				id: search_button
+				text: '  Search  '
+				size_hint: None, None
+				width: 150
+				height: 50
+				on_press: root.search_bar_search()
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 80
+
+			Label:
+				id: search_result_label
+				markup: True
+				font_size: 30
+				text: ''
+				size_hint: None, 1
+				size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 40
+
+			Label:
+				markup: True
+				font_size: 24
+				text: 'Display Options: '
+				size_hint: None, 1
+				size: self.texture_size
+
+			DisplayOptionButton:
+				id: Large_grid_button
+				text: 'Large'
+				on_release: self.large_b()
+
+			DisplayOptionButton:
+				id: Medium_grid_button
+				text: 'Medium'
+				on_release: self.standard_b()
+
+			DisplayOptionButton:
+				id: Small_grid_button
+				text: 'Small'
+				on_release: self.small_b()
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, 1
+			bar_width: 15
+
+			GridLayout:
+				id: search_result_grid
+				orientation: "vertical"
+				spacing: 10
+				cols: 5
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 200
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+
+			Button:
+				id: load_more_button
+				on_release: root.load_more()
+				text: 'Load more results'
+
+
+		Label:
+			size_hint: 1, None
+			height: 80

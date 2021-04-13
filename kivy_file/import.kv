@@ -1,0 +1,258 @@
+<ImportScreenButton>:
+	font_size: 28
+	size_hint: None, 1
+	size: self.texture_size
+	height: 50
+
+<ImportTagButton>:
+	font_size: 28
+	size_hint: 1, None
+	height: 50
+	background_normal: ''
+	background_color: (0.5, 0.5, 0.5, 1)
+	shorten: True
+	text_size: (max(self.width - 10, 0), None)
+
+<ImportPreviewImage>:
+	size_hint: 1, 1
+
+<DuplicateViewImage>:
+	size_hint: 1, 1
+
+<DuplicateView>:
+	size_hint: None, None
+	width: 640
+	height: 840
+	background: 'atlas://data/images/defaulttheme/button_pressed'
+	duplicate_grid: duplicate_grid
+
+	BoxLayout: 
+		orientation: 'vertical'
+		spacing: 10
+		size_hint: None, None
+		width: 600
+		height: 800
+
+		Label:
+			size_hint: None, 1
+			height: 20
+
+		Label:
+			font_size: 32
+			text: '[b]Duplicate Photos Found[/b]'
+			markup: True
+			size_hint: 1, None
+			size: self.texture_size
+
+		Label:
+			font_size: 24
+			text: '[b]The following photos will be deleted[/b]'
+			markup: True
+			size_hint: 1, None
+			size: self.texture_size
+
+		Label:
+			font_size: 24
+			text: 'Click to remove photos you want to keep.'
+			size_hint: 1, None
+			size: self.texture_size
+
+		Label:
+			size_hint: 1, None
+			height: 20
+
+		RecycleView:
+			scroll_type: ['bars', 'content']
+			size_hint: 1, None
+			height: 400
+			bar_width: 15
+
+			GridLayout:
+				id: duplicate_grid
+				orientation: "vertical"
+				spacing: 10
+				cols: 3
+				size_hint: 1, None
+				height: self.minimum_height
+				row_default_height: 200
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 10
+
+			Space:
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Ignore  '
+				on_release: root.close_view()
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Restore  '
+				on_release: root.restore()
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Clear  '
+				on_release: root.clear()
+
+			Button:
+				font_size: 28
+				size_hint: None, 1
+				size: self.texture_size
+				text: '  Confirm  '
+				on_release: root.confirm_b()
+
+			Space:
+
+		Label:
+			size_hint: None, 1
+			height: 20
+
+
+# --- Import Screen ---
+<ImportScreen>:
+	import_preview_grid: import_preview_grid
+	import_button: import_button
+	import_warn_label: import_message_label
+	import_album: import_album
+	import_tag: import_tag
+	import_tag_grid: import_tag_grid
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: 1, 1
+		padding: 20
+		spacing: 10
+
+		Label:
+			font_size: 40
+			text: "[b]Import Photos[/b]"
+			markup: True
+			size_hint: None, None
+			size: self.texture_size
+
+
+		Label:
+			font_size: 28
+			text: "You can add photo by dropping the photo into the application."
+			size_hint: None, None
+			size: self.texture_size
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, 1
+			spacing: 10
+
+			RecycleView:
+				scroll_type: ['bars', 'content']
+				size_hint: 1, 1
+				bar_width: 10
+
+				GridLayout:
+					id: import_preview_grid
+					orientation: "vertical"
+					spacing: 10
+					cols: 2
+					size_hint: 1, None
+					height: self.minimum_height
+					row_default_height: 120
+
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint: 1, 1
+				spacing: 10
+
+				Label:
+					font_size: 28
+					text: "[b]Album[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				TextInput:
+					id: import_album
+					hint_text: 'enter an album name'
+					size_hint: 1, None
+					height: 50
+					multiline: False
+					write_tab: False
+
+				Label:
+					font_size: 28
+					text: "[b]Tags[/b]"
+					markup: True
+					size_hint: None, None
+					size: self.texture_size
+
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, None
+					spacing: 5
+					height: 50
+
+					TextInput:
+						id: import_tag
+						hint_text: 'enter a tag name'
+						size_hint: 1, None
+						height: 50
+						multiline: False
+						write_tab: False
+						on_text_validate: root.add_tag()
+					
+					ImportScreenButton:
+						text: '  Add tag  '
+						on_release: self.add_tag_b()
+
+				RecycleView:
+					scroll_type: ['bars', 'content']
+					size_hint: 1, 1
+					bar_width: 10
+
+					GridLayout:
+						id: import_tag_grid
+						orientation: 'vertical'
+						size_hint: 1, None
+						height: self.minimum_height
+						cols: 1
+						spacing: 2
+
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint: 1, None
+			height: 50
+			spacing: 20
+
+			Space:
+
+			ImportScreenButton:
+				id: import_clear_button
+				text: '  Clear Photos  '
+				on_release: self.clear_data_b()
+
+			ImportScreenButton:
+				id: import_button
+				text: '  Import photos  '
+				on_release: root.import_photos()
+
+			Space:
+
+		Label:
+			id: import_message_label
+			font_size: 28
+			text: ''
+			size_hint: 1, None
+			height: 50
+
+		Label:
+			size_hint: 1, None
+			height: 100
